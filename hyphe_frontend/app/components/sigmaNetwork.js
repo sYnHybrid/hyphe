@@ -78,6 +78,9 @@ angular.module('hyphe.sigmaNetworkComponent', [])
 
         $scope.$on("$destroy", function(){
           $scope.layout.kill()
+          if (renderer) {
+            renderer.kill()
+          }
         })
 
         /// Functions
@@ -87,6 +90,10 @@ angular.module('hyphe.sigmaNetworkComponent', [])
             if (!container) return
 
             renderer = new Sigma.WebGLRenderer($scope.network, container)
+
+            if ($scope.renderingContext) {
+              $scope.renderingContext.renderer = renderer
+            }
 
             $scope.zoomIn = function(){
               var camera = renderer.getCamera()
@@ -156,7 +163,9 @@ angular.module('hyphe.sigmaNetworkComponent', [])
               $timeout($scope.onStageClick)
             })
           }
-
+          if ($scope.onTabLeave) {
+            $scope.stopLayout()
+          }
         }
 
       }

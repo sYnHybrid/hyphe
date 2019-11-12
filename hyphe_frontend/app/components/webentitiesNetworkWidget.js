@@ -85,6 +85,7 @@ angular.module('hyphe.webentitiesNetworkWidgetComponent', [])
         $scope.loading = true
 
         $scope.network
+        $scope.renderingContext = {}
 
         $scope.nodeColorMode = '_webentitystatus'
         $scope.nodeSizeMode = 'indegree'
@@ -151,7 +152,31 @@ angular.module('hyphe.webentitiesNetworkWidgetComponent', [])
             }
           });
           $scope.bothDegree = $scope.bothDegree/2;  //the bothDegree was counted from the two nodes so we have to divide it by 2.
+          //centerNode(nid)
         };
+
+        /*  Function to be called when selecting a node to focus camera on it... But it's not working because sigma is way too complicated. A feature is supposed to be added by Yomguithereal to make it work
+
+        function centerNode(nid){
+          var dims = {
+            width: $scope.renderingContext.renderer.width,
+            height: $scope.renderingContext.renderer.height
+          }
+          var options = {duration : 50000}
+          console.log($scope.renderingContext)
+          var camera = $scope.renderingContext.renderer.getCamera()
+          console.log(camera)
+          var node = $scope.renderingContext.renderer.nodeDataCache[nid]
+          console.log(camera.graphToViewport(dims, node.x, node.y))
+
+          return camera.animate({
+            x: camera.graphToViewport(dims, node.x, node.y).x,
+            y: camera.graphToViewport(dims, node.x, node.y).y,
+            ratio: 1,
+            angle: 0
+          }, options )
+        }
+*/
 
         $scope.networkStageClick = function(){
           $scope.selectedItem = null;
