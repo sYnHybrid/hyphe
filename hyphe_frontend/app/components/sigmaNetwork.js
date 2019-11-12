@@ -11,12 +11,14 @@ angular.module('hyphe.sigmaNetworkComponent', [])
       ,templateUrl: 'components/sigmaNetwork.html'
       ,scope: {
         network: '=',
+        renderingContext: '=',
         downloadNetwork: '=',
         suspendLayout: '=',             // Optional. Stops layout when suspendLayout becomes true
         startLayoutOnShow: '=',         // Optional. Starts layout when suspendLayout becomes false
         startLayoutOnLoad: '=',         // Optional. Default: true
         onNodeClick: '=',
-        onStageClick: '='
+        onStageClick: '=',
+        onTabLeave: '='
       }
       ,link: function($scope, el, attrs) {
         var renderer

@@ -152,4 +152,18 @@ angular.module('hyphe.directives', [])
     }
   }])
 
+    .directive('citeBox', [function(){
+      return {
+        restrict: 'E'
+        ,templateUrl: 'partials/citebox.html'
+        ,scope: {
+            types: '='
+          , counts: '='
+          , disabled: '='
+        }
+        ,link: function(scope, el, attrs) {
+        }
+      }
+    }])
+
 ;
