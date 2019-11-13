@@ -17,8 +17,7 @@ angular.module('hyphe.sigmaNetworkComponent', [])
         startLayoutOnShow: '=',         // Optional. Starts layout when suspendLayout becomes false
         startLayoutOnLoad: '=',         // Optional. Default: true
         onNodeClick: '=',
-        onStageClick: '=',
-        onTabLeave: '='
+        onStageClick: '='
       }
       ,link: function($scope, el, attrs) {
         var renderer
@@ -164,9 +163,6 @@ angular.module('hyphe.sigmaNetworkComponent', [])
             renderer.on('clickStage', function(e){
               $timeout($scope.onStageClick)
             })
-          }
-          if ($scope.onTabLeave) {
-            $scope.stopLayout()
           }
         }
 
