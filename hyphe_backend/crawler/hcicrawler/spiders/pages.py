@@ -78,6 +78,8 @@ class PagesCrawler(Spider):
         self.log("ARGUMENTS : "+str(self.args), logging.INFO)
         if self.phantom:
             self.init_phantom()
+        # TODO: Init crawl with 1st start_url prefixed at desired timestamp from config
+        # yield seld._request("http://archivesinternet.bnf.fr/20100101000000/"+self.start_urls[0])
         for url in self.start_urls:
             yield self._request(url)
 
@@ -128,6 +130,10 @@ class PagesCrawler(Spider):
 
     def handle_response(self, response):
         lru = url_to_lru_clean(response.url, TLDS_TREE)
+
+        self.log("HEADERS for "+response.url+" "+str(response.headers))
+        # TODO: Check timestamp within an acceptable window around the desired archive date and drop page otherwise
+        # TODO: Store timestamp in page's metadata
 
         if self.phantom:
             self.phantom.get(response.url)
@@ -269,6 +275,8 @@ class PagesCrawler(Spider):
         return p
 
     def _should_follow(self, depth, tolru):
+        if tolru.startswith("s:http|h:fr|h:bnf|h:archivesinternet|"):
+            return True
         c1 = depth < self.maxdepth
         c2 = self.prefixes_trie.match_lru(tolru)
         return c1 and c2
@@ -281,6 +289,9 @@ class PagesCrawler(Spider):
             kw['cookies'] = self.cookies
         if self.phantom:
             kw['method'] = 'HEAD'
+        kw['headers'] = {
+            "BnF-OSWM-User-Name": "WS-"+MONGO_DB.upper()
+        }
         return Request(url, **kw)
 
 
